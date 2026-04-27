@@ -1,0 +1,225 @@
+<html>
+        <head><title>Downloaded HTML</title></head>
+        <body>
+            <pre style="white-space: pre-wrap; word-wrap: break-word;"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+/* GIFT */
+.gift-screen { text-align: center; cursor: pointer; }
+.gift { font-size: 120px; animation: shake 1s infinite; }
+@keyframes shake {
+    0%,100%{transform:rotate(0)}
+    25%{transform:rotate(5deg)}
+    75%{transform:rotate(-5deg)}
+}
+
+/* CARD */
+.card {
+    width: 90%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.95);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+}
+
+/* HEARTBEAT */
+.heartbeat {
+    animation: beat 1s infinite;
+}
+@keyframes beat {
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+}
+
+/* IMAGES */
+.images {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+.images img {
+    width:80px;
+    height:80px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+/* TEXT */
+.letter {
+    font-size:14px;
+    line-height:1.6;
+    margin:10px 0;
+    min-height:120px;
+}
+
+/* BUTTONS */
+button {
+    margin-top:10px;
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    font-weight:600;
+}
+.btn-yes{background:#ff4d88;color:#fff;}
+.btn-no{background:#ff7aa2;color:#fff;}
+
+/* CONFETTI */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: red;
+    top: -10px;
+    animation: fall 3s linear forwards;
+}
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); }
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<!-- GIFT -->
+<div class="gift-screen" onclick="openGift()">
+    <div class="gift">🎁</div>
+    <p>Tap to open</p>
+</div>
+
+<div class="card" id="card">
+
+<div id="step1">
+<h2>HELLO BHONDU SINGH</h2>
+
+<div class="images">
+<img src="img1.jpg">
+<img src="img2.jpg">
+<img src="img3.jpg">
+<img src="img4.jpg">
+</div>
+
+<button onclick="next1()">Next</button>
+</div>
+
+<div id="step2" class="hidden">
+<h2>Hey Diptu</h2>
+<div class="letter" id="typeText"></div>
+<button onclick="next2()">Next</button>
+</div>
+
+<div id="step3" class="hidden">
+<h2 class="heartbeat">Will you go out with me on a date tomorrow?</h2>
+
+<button class="btn-yes" onclick="yes()">Yes 💖</button>
+<button class="btn-no" id="noBtn" onmouseover="moveNo()">Sorry I'm busy</button>
+
+<p id="res"></p>
+</div>
+
+</div>
+
+<audio id="bgm" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+
+<script>
+
+/* GIFT OPEN */
+function openGift(){
+    document.querySelector(".gift-screen").style.display="none";
+    document.getElementById("card").style.display="block";
+    document.getElementById("bgm").play();
+}
+
+/* TYPEWRITER */
+let text = `You’re honestly a little awesome, ridiculously beautiful, and also very, very mean (which I’m still trying to deal with 😒).
+
+But somehow, that mix is exactly what makes you… you—and I don’t think I’d change it even if I could. You have this way of getting under my skin, confusing me, making me laugh, and then leaving me wondering why I’m still smiling after.
+
+I genuinely like spending time with you—more than I probably admit. It’s easy, it’s fun, and even when you’re being impossible, I still find myself wanting more of it.
+
+So I had to rewrite this because I lost the original letter.(THIS IS NOT CHATGPT)`;
+
+let i=0;
+function type(){
+    if(i<text.length){
+        document.getElementById("typeText").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(type,20);
+    }
+}
+
+/* STEPS */
+function next1(){
+    document.getElementById("step1").classList.add("hidden");
+    document.getElementById("step2").classList.remove("hidden");
+    type();
+}
+
+function next2(){
+    document.getElementById("step2").classList.add("hidden");
+    document.getElementById("step3").classList.remove("hidden");
+}
+
+/* NO BUTTON */
+let noTexts=["Are you sure?","Think again 😒","Wrong answer 😤"];
+let count=0;
+function moveNo(){
+    let b=document.getElementById("noBtn");
+    b.innerText=noTexts[count%noTexts.length];
+    count++;
+
+    let x=Math.random()*200;
+    let y=Math.random()*200;
+    b.style.position="absolute";
+    b.style.left=x+"px";
+    b.style.top=y+"px";
+}
+
+/* CONFETTI */
+function confetti(){
+    for(let i=0;i<80;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+}
+
+/* YES */
+function yes(){
+    confetti();
+    document.getElementById("res").innerText="Arey yaar kaha fas gaya 😶";
+}
+
+</script>
+
+</body>
+</html></pre>
+        </body>
+    </html>
